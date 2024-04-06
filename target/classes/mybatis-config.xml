@@ -36,6 +36,8 @@
     </environments>
     <mappers>
         <!--加载sql映射文件-->
-        <mapper resource="UserMapper.xml"/>
+        <!-- <mapper resource="com/itheima/mapper/UserMapper.xml"/>-->
+        <!--Mapper代理方式-->
+        <package name="com.chk.mapper"/>
     </mappers>
 </configuration>
