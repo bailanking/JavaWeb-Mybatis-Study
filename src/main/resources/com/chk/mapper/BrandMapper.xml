@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+    给字段起别名
+-->
+
+<!--<mapper namespace="com.chk.mapper.BrandMapper">-->
+<!--    <select id="selectAll" resultType="brand">-->
+<!--        select id, brand_name as brandName, company_name as companyName,-->
+<!--               ordered, description, status-->
+<!--        from tb_brand;-->
+<!--    </select>-->
+<!--</mapper>-->
+
+<!--
+    SQL片段
+-->
+
+<!--<mapper namespace="com.chk.mapper.BrandMapper">-->
+<!--    -->
+<!--    <sql id="brand_column">-->
+<!--        id, brand_name as brandName, company_name as companyName, ordered, description, status-->
+<!--    </sql>-->
+
+
+<!--    <select id="selectAll" resultType="brand">-->
+<!--        select-->
+<!--        <include refid="brand_column"/>-->
+<!--        from tb_brand;-->
+<!--    </select>-->
+<!--</mapper>-->
+
+
+<!--
+    使用resultMap
+-->
+
+<mapper namespace="com.chk.mapper.BrandMapper">
+
+
+    <resultMap id = "brandResultMap" type="brand">
+        <!--
+              id: 完成主键字段的映射
+                   column：表的列名
+                   property: 实体类的属性名
+              result: 完成一般字段的映射
+                   column: 表的列名
+                   property: 实体类的属性名
+        -->
+        <result column="brand_name" property="brandName"/>
+        <result column="company_name" property="companyName"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="brandResultMap">
+        select
+            *
+        from tb_brand;
+    </select>
+</mapper>
