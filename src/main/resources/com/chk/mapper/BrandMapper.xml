@@ -59,4 +59,26 @@
             *
         from tb_brand;
     </select>
+
+    <!--
+       参数占位符：
+            mybatis提供了两种参数占位符：
+
+                 #{} ：执行SQL时，会将 #{} 占位符替换为？，将来自动设置参数值。从上述例子可以看出使用#{} 底层使用的是 `PreparedStatement`
+
+                ${} ：拼接SQL。底层使用的是 `Statement`，会存在SQL注入问题。如下图将 映射配置文件中的 #{} 替换成 ${} 来看效果
+
+        特殊字段的处理：
+                1. 转义字符
+                2. <![CDATA[内容]]>
+    -->
+
+    <select id="selectById" resultMap="brandResultMap">
+        select * from tb_brand where id = #{id};
+    </select>
+
+
+    <select id="selectByCondition" resultMap="brandResultMap">
+        select * from tb_brand where status = #{status} and company_name like #{companyName} and brand_name like #{brandName};
+    </select>
 </mapper>
