@@ -41,7 +41,7 @@
 <mapper namespace="com.chk.mapper.BrandMapper">
 
 
-    <resultMap id = "brandResultMap" type="brand">
+    <resultMap id="brandResultMap" type="brand">
         <!--
               id: 完成主键字段的映射
                    column：表的列名
@@ -54,9 +54,10 @@
         <result column="company_name" property="companyName"/>
     </resultMap>
 
+
+
     <select id="selectAll" resultMap="brandResultMap">
-        select
-            *
+        select *
         from tb_brand;
     </select>
 
@@ -74,11 +75,84 @@
     -->
 
     <select id="selectById" resultMap="brandResultMap">
-        select * from tb_brand where id = #{id};
+        select *
+        from tb_brand
+        where id = #{id};
     </select>
+
+
+<!--    <select id="selectByCondition" resultMap="brandResultMap">-->
+<!--        select *-->
+<!--        from tb_brand-->
+<!--        where status = #{status}-->
+<!--        and company_name like #{companyName}-->
+<!--        and brand_name like #{brandName}-->
+<!--    </select>-->
 
 
     <select id="selectByCondition" resultMap="brandResultMap">
-        select * from tb_brand where status = #{status} and company_name like #{companyName} and brand_name like #{brandName};
+        select *
+        from tb_brand
+        <where>
+            <if test="status != null">
+                status = #{status}
+            </if>
+            <if test="companyName != null and companyName != '' ">
+                and company_name like #{companyName}
+            </if>
+            <if test="brandName != null and brandName != '' ">
+                and brand_name like #{brandName}
+            </if>
+        </where>
     </select>
+    <select id="selectByConditionSingle" resultMap="brandResultMap">
+        select *
+        from tb_brand
+        <where>
+            <choose>
+                <when test="status != null">
+                    status = #{status}
+                </when>
+                <when test="companyName != null and companyName != '' ">
+                    company_name like #{companyName}
+                </when>
+                <when test="brandName != null and brandName != '' ">
+                    brand_name like #{brandName}
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_brand (brand_name, company_name, ordered, description, status)
+        values (#{brandName}, #{companyName}, #{ordered}, #{description}, #{status});
+    </insert>
+
+    <update id="update">
+        update tb_brand
+        <set>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="companyName != null and companyName != '' ">
+                company_name = #{companyName},
+            </if>
+            <if test="brandName != null and brandName != '' ">
+                brand_name = #{brandName},
+            </if>
+            <if test="description != null and description != '' ">
+                description = #{description},
+            </if>
+            <if test="ordered != null">
+                ordered = #{ordered}
+            </if>
+        </set>
+        where id = #{id};
+    </update>
+
+    <delete id="deleteById">
+        delete
+        from tb_brand
+        where id = #{id};
+    </delete>
 </mapper>
