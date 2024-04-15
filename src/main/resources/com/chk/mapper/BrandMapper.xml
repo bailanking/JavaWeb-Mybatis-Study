@@ -155,4 +155,13 @@
         from tb_brand
         where id = #{id};
     </delete>
+    <delete id="deleteByIds">
+        delete
+        from tb_brand
+        where id in 
+        <foreach collection="array" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        ;
+    </delete>
 </mapper>

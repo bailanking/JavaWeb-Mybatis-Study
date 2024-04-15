@@ -31,9 +31,15 @@ public class MybatisDemo2 {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         List<User> users = userMapper.selectAll();
 
+        String username = "zhangsan"; String password = "123";
+        int id = 2;
+        User user = userMapper.select(username, password);
+        User user1 = userMapper.selectById(id);
+
         // 处理结果
         System.out.println(users);
-
+        System.out.println(user);
+        System.out.println(user1);
         //释放资源
         sqlSession.close();
     }

@@ -247,5 +247,24 @@ public class MybatisTest {
         // 5. 释放资源
         sqlSession.close();
     }
+
+    @Test
+    public void testDeleteByIds() throws IOException {
+        String recource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(recource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        BrandMapper brandMapper = sqlSession.getMapper(BrandMapper.class);
+
+        int[] ids = {9, 10, 11};
+
+        brandMapper.deleteByIds(ids);
+
+        sqlSession.commit();
+
+        sqlSession.close();
+    }
 }
 

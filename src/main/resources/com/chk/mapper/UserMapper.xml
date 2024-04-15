@@ -8,4 +8,11 @@
     <select id="selectAll" resultType="User">
         select * from tb_user;
     </select>
+    <select id="select" resultType="User">
+        select *
+        from tb_user where
+        username = #{username}
+        and password = #{password}
+    </select>
+
 </mapper>
